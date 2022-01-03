@@ -1,0 +1,17 @@
+.nav {
+  text-align: center;
+}
+.link {
+  color: blue;
+}
+
+.link:not(:last-child) {
+  margin-right: 20px;
+}
+.activeLink {
+  color: red;
+}
+
+.activeLink:not(:last-child) {
+  margin-right: 20px;
+}

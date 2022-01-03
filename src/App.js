@@ -1,20 +1,22 @@
+import { Routes, Route } from 'react-router-dom';
 import './App.css';
+import AppBar from './components/AppBar/AppBar';
+import HomePage from './components/HomePage/HomePage';
+import MovieDetailsPage from './components/MovieDetailsPage/MovieDetailsPage';
+import MoviesPage from './components/MoviesPage/MoviesPage';
 
-const aaa = fetch(`https://api.themoviedb.org/3/movie/39860/credits?api_key=0f7071e202153419eb1f1c3088d789f4&language=en-US`)
-  .then(response => {
-    if (response.ok) {
-      return response.json()
-    }
-    return Promise.reject(
-      new Error(`Error`)
-    );
-  });
 
 function App() {
-  
-  console.log(aaa.then(data => console.log(data)));
   return (
-    <h1>This is App</h1>
+    <>
+      <AppBar />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        {/* <Route path="/movies" element={<MoviesPage />} /> */}
+        <Route path="/movies/:movieID/*"  element={<MovieDetailsPage />} />
+      </Routes>
+    </>
   );
 }
 
