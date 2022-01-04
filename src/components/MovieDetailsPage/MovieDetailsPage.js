@@ -18,14 +18,14 @@ export default function MovieDetailsPage() {
     }, [movieID]);
 
     useEffect(() => {
-        FetchAPI.FetchMovieCredits(movieID).then(data => {
-            setMovieCast(data);
+        FetchAPI.FetchMovieCredits(movieID).then(({cast}) => {
+            setMovieCast(cast);
         })
     }, [movieID]);
 
     useEffect(() => {
-        FetchAPI.FetchMovieReviews(movieID).then(data => {
-            setMovieReviews(data);
+        FetchAPI.FetchMovieReviews(movieID).then(({results}) => {
+            setMovieReviews(results);
         })
     }, [movieID]);
 

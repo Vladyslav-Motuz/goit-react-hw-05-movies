@@ -12,8 +12,7 @@ function MoviesPage() {
         if (searchName.trim() === "") {
             alert("Введите запрос")
             return
-        }    
-              
+        }             
         resetForm();
     };
 
