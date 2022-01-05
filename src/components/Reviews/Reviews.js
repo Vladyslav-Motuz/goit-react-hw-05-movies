@@ -1,6 +1,4 @@
-export default function Reviews({MovieReviews}) {    
-    console.log(MovieReviews);
-
+export default function Reviews({MovieReviews}) {  
     if (MovieReviews.length === 0) { return <h1>We don`t have any reviews for this movie.</h1> }
     return (
         <ul>

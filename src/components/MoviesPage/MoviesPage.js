@@ -1,32 +1,49 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useLocation } from 'react-router-dom';
+
+import FetchAPI from '../../servise/FetchAPI';
 
 function MoviesPage() {
-    const [searchName, setSearchName] = useState("");
+    const [query, setQuery] = useState("");
+    const [searchFilms, setSearchFilms] = useState([]);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     const handleChange = (event) => {
-        setSearchName(event.currentTarget.value.toLowerCase());
+        setQuery(event.currentTarget.value.toLowerCase());        
     };
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (searchName.trim() === "") {
-            alert("Введите запрос")
+        if (query.trim() === "") {
+            alert("Введите запрос фильма")
             return
-        }             
+        }
+        navigate(`?query=${query}`);       
         resetForm();
     };
 
     const resetForm = () => {
-        setSearchName("");
+        setQuery("");
     };
+
+    const serchParams = new URLSearchParams(location.search);   
+    const serchParamsName = serchParams.get('query');   
+
+    useEffect(() => {
+        if (serchParamsName === '') { return };
+        FetchAPI.FetchSearchQuery(serchParamsName).then(({results}) => {
+            setSearchFilms(results);
+        })
+    }, [serchParamsName]);
 
     return (
         <>
-            <form onSubmit={handleSubmit}>             
+            <form onSubmit={handleSubmit}>
                 <input
-                    onChange={handleChange}                    
+                    onChange={handleChange}
                     type="text"
-                    value={searchName}                    
+                    value={query}
                     placeholder="Search images and photos"
                 />
 
@@ -34,8 +51,15 @@ function MoviesPage() {
                     <span >Search</span>
                 </button>
             </form>
-
-            <h3>{searchName}</h3>
+            <ul>
+                {serchParamsName &&                
+                    searchFilms.map(film => (
+                        <li key={film.id}>
+                            <Link to={`/movies/${film.id}`}>{film.title}</Link>
+                        </li>
+                    ))
+                }
+            </ul>
         </>
     );
 };

@@ -64,6 +64,7 @@ function FetchMovieReviews(movie_id) {
 
 const api = {
     FetchTrendingDay,
+    FetchSearchQuery,
     FetchMovieDetails,
     FetchMovieCredits,
     FetchMovieReviews,

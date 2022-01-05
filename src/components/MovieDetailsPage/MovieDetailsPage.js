@@ -1,4 +1,4 @@
-import { useParams, Link, Routes, Route} from 'react-router-dom';
+import { useParams, Link, Routes, Route, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from "react";
 import FetchAPI from '../../servise/FetchAPI';
 import Cast from '../Cast/Cast';
@@ -9,7 +9,8 @@ export default function MovieDetailsPage() {
     const [MovieCast, setMovieCast] = useState(null); 
     const [MovieReviews, setMovieReviews] = useState(null);
 
-    const {movieID} = useParams();      
+    const { movieID } = useParams();
+    const navigate = useNavigate();
     
     useEffect(() => {
         FetchAPI.FetchMovieDetails(movieID).then(data => {
@@ -31,7 +32,7 @@ export default function MovieDetailsPage() {
 
     return (
         <>
-            <button>Back to Home</button>
+            <button onClick={() => navigate(-1)}>Back to Home</button>
             {MovieDetails &&
                 <>
                     <div>
