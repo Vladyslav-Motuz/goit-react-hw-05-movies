@@ -1,8 +1,11 @@
 import { useParams, Link, Routes, Route, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState, useEffect, lazy, Suspense } from "react";
 import FetchAPI from '../../servise/FetchAPI';
-import Cast from '../Cast/Cast';
-import Reviews from '../Reviews/Reviews';
+// import Cast from '../Cast/Cast';
+// import Reviews from '../Reviews/Reviews';
+
+const Cast = lazy(() => import('../Cast/Cast' /* webpackChunkName: "Cast" */));
+const Reviews = lazy(() => import('../Reviews/Reviews' /* webpackChunkName: "Reviews" */));
 
 export default function MovieDetailsPage() {
     const [MovieDetails, setMovieDetails] = useState(null);
@@ -63,10 +66,12 @@ export default function MovieDetailsPage() {
                 </li>
             </ul>
             <hr />
-            <Routes>
-                <Route path="/cast" element={<Cast MovieCast={MovieCast}/>} />
-                <Route path="/reviews" element={<Reviews MovieReviews={MovieReviews}/>} />
-            </Routes>
+            <Suspense fallback={<h1>Loading ... ... ...</h1>}>
+                <Routes>
+                    <Route path="/cast" element={<Cast MovieCast={MovieCast} />} />
+                    <Route path="/reviews" element={<Reviews MovieReviews={MovieReviews} />} />
+                </Routes>
+            </Suspense>
         </>
     );
 }
